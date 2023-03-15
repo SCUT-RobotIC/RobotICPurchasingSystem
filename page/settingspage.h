@@ -1,8 +1,9 @@
 #ifndef SETTINGSPAGE_H
 #define SETTINGSPAGE_H
 
-#include <QWidget>
 
+#include <QWidget>
+#include"header/settings.h"
 namespace Ui {
     class SettingsPage;
 }
@@ -14,9 +15,16 @@ class SettingsPage : public QWidget
 public:
     explicit SettingsPage(QWidget *parent = nullptr);
     ~SettingsPage();
+private slots:
+    void on_pushButton_clicked();
+public slots:
 
 private:
     Ui::SettingsPage *ui;
+
+
+signals:
+
 };
 
 #endif // SETTINGSPAGE_H

@@ -1,11 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QLockFile>
 
 #include "page/currentmonthpage.h"
 #include "page/settingspage.h"
+#include <QMainWindow>
+#include <QLockFile>
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,9 +26,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QString mDataPath;
-    CurrentMonthPage *CurrentMonth;
-    SettingsPage *Settings;
+    CurrentMonthPage *mCurrentMonthPage;
+    SettingsPage *mSettingsPage;
     void resizeEvent(QResizeEvent *event);
 
 

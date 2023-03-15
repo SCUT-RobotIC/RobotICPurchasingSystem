@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include"header/jsonoperation.h"
-#include"header/exceloperation.h"
+
 
 
 #include<QJsonArray>
@@ -18,14 +17,18 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    CurrentMonth=new CurrentMonthPage(ui->tab);
-    Settings=new SettingsPage(ui->tab_5);
-    mDataPath=QApplication::applicationDirPath();
+    mCurrentMonthPage=new CurrentMonthPage(ui->tab);
+    mSettingsPage=new SettingsPage(ui->tab_5);
+
+
+
+
+
 
     QTimer::singleShot(100,this, [=]() {
         int width=ui->tabWidget->width(),height=ui->tab->height();
-        CurrentMonth->resize(width,height);
-        Settings->resize(width,height);
+        mCurrentMonthPage->resize(width,height);
+        mSettingsPage->resize(width,height);
     });//构造函数中无法获取正确的窗口大小，所以要延时处理
 
 }
@@ -39,9 +42,10 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 {
     int width=ui->tab->width(),height=ui->tab->height();
     //tabpage1->setSizePolicy(QSizePolicy(width,height));
-    CurrentMonth->resize(width,height);
+    mCurrentMonthPage->resize(width,height);
 
 }
+
 
 
 

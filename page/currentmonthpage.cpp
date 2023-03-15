@@ -1,7 +1,6 @@
 #include "currentmonthpage.h"
 #include "ui_currentmonthpage.h"
 #include "header/jsonoperation.h"
-
 #include<QJsonArray>
 #include<QJsonDocument>
 #include<QJsonObject>
@@ -10,6 +9,7 @@
 #include<QDir>
 #include<QLockFile>
 #include<QMessageBox>
+#include<QMainWindow>
 #include<QTimer>
 CurrentMonthPage::CurrentMonthPage(QWidget *parent) :
     QWidget(parent),
@@ -27,17 +27,14 @@ CurrentMonthPage::~CurrentMonthPage()
 
 void CurrentMonthPage::updateTable()
 {
-   QString mDataPath=QApplication::applicationDirPath();
-
-
    QDateTime dateTime(QDateTime::currentDateTime());
    QString filename = dateTime.toString("yyyy-MM")+".json";
    bool success=false;
-   QJsonObject rootObj = JsonOperation::readJson(mDataPath+"/"+filename,success);
+   QJsonObject rootObj = JsonOperation::readJson(settings::settings->dataPath+"/"+filename,success);
 
    if (success==false)
    {
-        JsonOperation::createJsonFile(mDataPath,filename);
+       JsonOperation::createJsonFile(settings::settings->dataPath,filename);
    }
 
    QJsonArray JsonArray;
@@ -70,6 +67,8 @@ void CurrentMonthPage::updateTable()
            }
        }
    }
+   ui->pushButton_2->setEnabled(false);
+   haveChanged=false;
 }
 
 void CurrentMonthPage::getTableContent()
@@ -103,11 +102,55 @@ void CurrentMonthPage::on_addLine_clicked()
 
 void CurrentMonthPage::on_pushButton_2_clicked()
 {
-    QString mDataPath=QApplication::applicationDirPath();
+    QMessageBox msgBox;
+    msgBox.setText("是否要保存?");
+    //msgBox.setInformativeText("是否要保存?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Cancel);
+    int res = msgBox.exec();
+    if(res==QMessageBox::Save)
+    {
 
+        QDateTime dateTime(QDateTime::currentDateTime());
+        QString filename = dateTime.toString("yyyy-MM")+".json";
+        JsonOperation::writeJsonFromWidget(settings::settings->dataPath,filename,ui->tableWidget);
+        ui->pushButton_2->setEnabled(false);
+        haveChanged=false;
+    }
 
-    QDateTime dateTime(QDateTime::currentDateTime());
-    QString filename = dateTime.toString("yyyy-MM")+".json";
-    JsonOperation::writeJsonFromWidget(mDataPath+"/"+filename,ui->tableWidget);
 }
+
+
+void CurrentMonthPage::on_deleteLine_clicked()
+{
+    ui->tableWidget->removeRow(ui->tableWidget->currentRow());
+}
+
+
+void CurrentMonthPage::on_pushButton_clicked()
+{
+    QMessageBox msgBox;
+    msgBox.setText("是否重新加载文件?");
+    //msgBox.setInformativeText("");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    int res = msgBox.exec();
+    if(res==QMessageBox::Yes)
+    {
+        ui->tableWidget->setRowCount(0);
+        ui->tableWidget->clearContents();
+        updateTable();
+    }
+
+}
+
+
+void CurrentMonthPage::on_tableWidget_cellChanged(int row, int column)
+{
+    ui->pushButton_2->setEnabled(true);
+    haveChanged=true;
+}
+
+
+
 
