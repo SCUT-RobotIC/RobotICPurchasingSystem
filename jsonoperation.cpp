@@ -24,7 +24,6 @@ QJsonObject JsonOperation::readJson(QString fileurl,bool &success)
     QByteArray array = file.readAll();
     QJsonParseError jsonError;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(array,&jsonError);
-
     if(jsonError.error == QJsonParseError::NoError)
     {
        rootObj=jsonDoc.object();
@@ -36,7 +35,7 @@ QJsonObject JsonOperation::readJson(QString fileurl,bool &success)
 }
 
 
-bool JsonOperation::writeJsonFromWidget(QString fileurl,QTableWidget *widget)
+bool JsonOperation::writeJsonFromWidget(const QString &filepath,const QString &filename,QTableWidget *widget)
 {
 //    widget->row();
 //    widget->column();
@@ -47,24 +46,28 @@ bool JsonOperation::writeJsonFromWidget(QString fileurl,QTableWidget *widget)
     {
         //QJsonObject item("",widget->cellWidget(i,0));
         QJsonObject item;
-        item.insert("name",widget->item(i,0)->text());
-        item.insert("type",widget->item(i,1)->text());
-        item.insert("number",widget->item(i,2)->text());
-        item.insert("link",widget->item(i,3)->text());
-        item.insert("name",widget->item(i,4)->text());
-        item.insert("purchaser",widget->item(i,5)->text());
-        item.insert("state",widget->item(i,6)->text());
-        item.insert("invoice",widget->item(i,7)->text());
-        item.insert("notes",widget->item(i,8)->text());
+        item.insert("name",!(widget->item(i,0)==0)? widget->item(i,0)->text() : "");
+        item.insert("type",!(widget->item(i,1)==0) ? widget->item(i,1)->text() : "");
+        item.insert("number",!(widget->item(i,2)==0) ? widget->item(i,2)->text() : "");
+        item.insert("link",!(widget->item(i,3)==0)? widget->item(i,3)->text() : "");
+        item.insert("purchaser",!(widget->item(i,4)==0)? widget->item(i,4)->text() : "");
+        item.insert("state",!(widget->item(i,5)==0)? widget->item(i,5)->text() : "");
+        item.insert("invoice",!(widget->item(i,6)==0) ? widget->item(i,6)->text() : "");
+        item.insert("notes",!(widget->item(i,7)==0) ? widget->item(i,7)->text() : "");
         jsonArray.append(item);
     }
+    rootObject.insert("list",jsonArray);
     QJsonDocument doc;
     doc.setObject(rootObject);
-    if(!QFile::exists(fileurl))
+    if(!QFile::exists(filepath+"/"+filename))
     {
-        createJsonFile();
+        createJsonFile(filepath,filename);
     }
-    QFile file(fileurl);
+    QFile file(filepath+"/"+filename);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() <<"Failed to open";
+    }
     QTextStream stream(&file);
     stream.setCodec("UTF-8");
     stream << doc.toJson();

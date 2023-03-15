@@ -14,11 +14,13 @@ SOURCES += \
     main.cpp \
     page/currentmonthpage.cpp \
     page/mainwindow.cpp \
-    page/settingspage.cpp
+    page/settingspage.cpp \
+    settings.cpp
 
 HEADERS += \
     header/exceloperation.h \
     header/jsonoperation.h \
+    header/settings.h \
     page/currentmonthpage.h \
     page/mainwindow.h \
     page/settingspage.h

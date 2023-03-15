@@ -1,12 +1,12 @@
 #include "page/mainwindow.h"
-
+#include "header/settings.h"
 #include <QApplication>
 #include <QMessageBox>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    settings::getSettingsFromFile();
     MainWindow w;
-
     //重复启动检测
     QString path = QCoreApplication::applicationDirPath()+"/app.lock";
     QLockFile lockFile(path);
