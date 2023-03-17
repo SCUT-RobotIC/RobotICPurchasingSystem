@@ -35,7 +35,7 @@ void CurrentMonthPage::updateTable()
    QString filename = dateTime.toString("yyyy-MM")+".json";
    bool success=false;
    settings::getSettingsFromFile();
-   qDebug()<<settings::SETTINGS_STRUCT::dataPath;
+   //qDebug()<<settings::SETTINGS_STRUCT::dataPath;
    QJsonObject rootObj = JsonOperation::readJson(settings::SETTINGS_STRUCT::dataPath+"/json/"+filename,success);
    if (success==false)
    {

@@ -4,6 +4,7 @@
 
 #include "page/currentmonthpage.h"
 #include "page/settingspage.h"
+#include "page/historypage.h"
 #include <QMainWindow>
 #include <QLockFile>
 
@@ -28,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     CurrentMonthPage *mCurrentMonthPage;
     SettingsPage *mSettingsPage;
+    HistoryPage *mHistoryPage;
     void resizeEvent(QResizeEvent *event);
 
 

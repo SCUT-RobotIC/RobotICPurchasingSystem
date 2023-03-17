@@ -2,7 +2,7 @@
 #define HISTORYPAGE_H
 
 #include <QWidget>
-
+#include <QStringList>
 namespace Ui {
 class HistoryPage;
 }
@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::HistoryPage *ui;
+    QStringList fileList;
 };
 
 #endif // HISTORYPAGE_H

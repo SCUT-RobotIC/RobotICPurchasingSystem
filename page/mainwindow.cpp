@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     mCurrentMonthPage=new CurrentMonthPage(ui->tab);
     mSettingsPage=new SettingsPage(ui->tab_5);
-
+    mHistoryPage=new HistoryPage(ui->tab_4);
 
 
 
@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
         int width=ui->tabWidget->width(),height=ui->tab->height();
         mCurrentMonthPage->resize(width,height);
         mSettingsPage->resize(width,height);
+        mHistoryPage->resize(width,height);
     });//构造函数中无法获取正确的窗口大小，所以要延时处理
 
 }
