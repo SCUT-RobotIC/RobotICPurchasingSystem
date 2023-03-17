@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QMenu>
-#include <header/settings.h>
+
 namespace Ui {
     class CurrentMonthPage;
 }
@@ -32,7 +32,6 @@ private:
     void getTableContent();
 
 signals:
-    settings::SETTINGS_STRUCT getSettings();
 
 
 };

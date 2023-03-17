@@ -13,6 +13,7 @@ SOURCES += \
     jsonoperation.cpp \
     main.cpp \
     page/currentmonthpage.cpp \
+    page/historypage.cpp \
     page/mainwindow.cpp \
     page/settingspage.cpp \
     settings.cpp
@@ -22,11 +23,13 @@ HEADERS += \
     header/jsonoperation.h \
     header/settings.h \
     page/currentmonthpage.h \
+    page/historypage.h \
     page/mainwindow.h \
     page/settingspage.h
 
 FORMS += \
     page/currentmonthpage.ui \
+    page/historypage.ui \
     page/mainwindow.ui \
     page/settingspage.ui
 

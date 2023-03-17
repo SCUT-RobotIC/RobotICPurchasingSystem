@@ -1,6 +1,7 @@
 #include "currentmonthpage.h"
 #include "ui_currentmonthpage.h"
 #include "header/jsonoperation.h"
+#include <header/settings.h>
 #include<QJsonArray>
 #include<QJsonDocument>
 #include<QJsonObject>
@@ -11,11 +12,14 @@
 #include<QMessageBox>
 #include<QMainWindow>
 #include<QTimer>
+
+
 CurrentMonthPage::CurrentMonthPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CurrentMonthPage)
 {
     ui->setupUi(this);
+
     ui->tableWidget->setSortingEnabled(true);
     updateTable();
 }
@@ -30,11 +34,12 @@ void CurrentMonthPage::updateTable()
    QDateTime dateTime(QDateTime::currentDateTime());
    QString filename = dateTime.toString("yyyy-MM")+".json";
    bool success=false;
-   QJsonObject rootObj = JsonOperation::readJson(settings::settings->dataPath+"/"+filename,success);
-
+   settings::getSettingsFromFile();
+   qDebug()<<settings::SETTINGS_STRUCT::dataPath;
+   QJsonObject rootObj = JsonOperation::readJson(settings::SETTINGS_STRUCT::dataPath+"/json/"+filename,success);
    if (success==false)
    {
-       JsonOperation::createJsonFile(settings::settings->dataPath,filename);
+       JsonOperation::createJsonFile(settings::SETTINGS_STRUCT::dataPath+"/json/",filename);
    }
 
    QJsonArray JsonArray;
@@ -113,7 +118,7 @@ void CurrentMonthPage::on_pushButton_2_clicked()
 
         QDateTime dateTime(QDateTime::currentDateTime());
         QString filename = dateTime.toString("yyyy-MM")+".json";
-        JsonOperation::writeJsonFromWidget(settings::settings->dataPath,filename,ui->tableWidget);
+        JsonOperation::writeJsonFromWidget(settings::SETTINGS_STRUCT::dataPath+"/json/",filename,ui->tableWidget);
         ui->pushButton_2->setEnabled(false);
         haveChanged=false;
     }

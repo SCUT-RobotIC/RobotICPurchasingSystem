@@ -5,11 +5,14 @@
 namespace settings{
 
 
+//Q_GLOBAL_STATIC(QString, dataPath);
+QString SETTINGS_STRUCT::dataPath="";
 void getSettingsFromFile()
 {
     bool success=false;
     QJsonObject inputsettings=JsonOperation::readJson(QApplication::applicationDirPath()+"/settings.json",success);
-    settings->dataPath=inputsettings.value("directory").toString();
+    SETTINGS_STRUCT::dataPath=inputsettings.value("directory").toString();
+
 }
 void updateSettingsToFile()
 {
