@@ -15,9 +15,13 @@ public:
     explicit HistoryPage(QWidget *parent = nullptr);
     ~HistoryPage();
 
+private slots:
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::HistoryPage *ui;
     QStringList fileList;
+    void updateTable(QString filename);
 };
 
 #endif // HISTORYPAGE_H

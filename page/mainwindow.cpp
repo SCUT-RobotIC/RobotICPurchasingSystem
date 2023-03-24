@@ -21,12 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     mSettingsPage=new SettingsPage(ui->tab_5);
     mHistoryPage=new HistoryPage(ui->tab_4);
 
-
-
-
-
     QTimer::singleShot(100,this, [=]() {
-        int width=ui->tabWidget->width(),height=ui->tab->height();
+        int width=ui->tabWidget->width(),height=ui->tabWidget->height()-22;
         mCurrentMonthPage->resize(width,height);
         mSettingsPage->resize(width,height);
         mHistoryPage->resize(width,height);
@@ -41,10 +37,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    int width=ui->tab->width(),height=ui->tab->height();
+    int width=ui->tabWidget->width(),height=ui->tabWidget->height()-22;
     //tabpage1->setSizePolicy(QSizePolicy(width,height));
     mCurrentMonthPage->resize(width,height);
-
+    mHistoryPage->resize(width,height);
+    mSettingsPage->resize(width,height);
 }
 
 

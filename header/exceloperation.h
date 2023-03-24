@@ -1,13 +1,14 @@
 #ifndef EXCELOPERATION_H
 #define EXCELOPERATION_H
 #include<QFile>
-
-class ExcelOperation
+#include<QThread>
+class ExcelOperation:public QThread
 {
 public:
     ExcelOperation();
-    bool static saveExcelFromJson(QFile *jsonfile);
+    bool static saveExcelFromJson(const QJsonObject &jsonObj,const QString &filepath,const QString &filename);
     bool static createExcel(const QString &filepath,const QString &filename);
+    void run()override;
 };
 
 #endif // EXCELOPERATION_H
