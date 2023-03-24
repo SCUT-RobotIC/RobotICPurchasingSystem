@@ -18,13 +18,18 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>本月清单</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout"/>
+      </widget>
+      <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>新建需求清单</string>
+       </attribute>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">

@@ -5,6 +5,8 @@
 #include "page/currentmonthpage.h"
 #include "page/settingspage.h"
 #include "page/historypage.h"
+#include "page/createlistpage.h"
+#include "page/excelpage.h"
 #include <QMainWindow>
 #include <QLockFile>
 
@@ -30,6 +32,8 @@ private:
     CurrentMonthPage *mCurrentMonthPage;
     SettingsPage *mSettingsPage;
     HistoryPage *mHistoryPage;
+    CreateListPage *mCreateListPage;
+    ExcelPage *mExcelPage;
     void resizeEvent(QResizeEvent *event);
 
 

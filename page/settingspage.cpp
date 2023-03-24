@@ -35,8 +35,6 @@ void SettingsPage::on_pushButton_clicked()
 
 void SettingsPage::on_pushButton_2_clicked()
 {
-    bool success=false;
-    QJsonObject arg=JsonOperation::readJson("E:/Programming/Qt/RobotICPurchasingSystem/RICPSData/json/2023-01.json",success);
-    ExcelOperation::saveExcelFromJson(arg,"E:/Programming/Qt/RobotICPurchasingSystem/RICPSData/json","2023-01.xlsx");
+
 }
 

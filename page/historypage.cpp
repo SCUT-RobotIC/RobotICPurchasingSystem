@@ -31,9 +31,6 @@ HistoryPage::HistoryPage(QWidget *parent) :
         }
     }
     ui->comboBox->setCurrentIndex(ui->comboBox->count()-1);
-    //打开最后一个文件
-
-
 }
 
 HistoryPage::~HistoryPage()
@@ -71,13 +68,13 @@ void HistoryPage::updateTable(QString filename)
                 ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 0, item); //添加到界面
                 item = new QTableWidgetItem(jsonItem.value("type").toString());
                 ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 1, item); //添加到界面
-                item = new QTableWidgetItem(QString::number(jsonItem.value("number").toInt()));
+                item = new QTableWidgetItem(jsonItem.value("number").toString());
                 ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 2, item); //添加到界面
                 item = new QTableWidgetItem(jsonItem.value("link").toString());
                 ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 3, item); //添加到界面
                 item = new QTableWidgetItem(jsonItem.value("purchaser").toString());
                 ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 4, item); //添加到界面
-                item = new QTableWidgetItem(QString::number(jsonItem.value("state").toInt()));
+                item = new QTableWidgetItem(jsonItem.value("state").toString());
                 ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 5, item); //添加到界面
                 item = new QTableWidgetItem(jsonItem.value("invoice").toString());
                 ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 6, item); //添加到界面

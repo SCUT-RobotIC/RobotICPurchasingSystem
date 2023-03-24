@@ -34,6 +34,11 @@ QJsonObject JsonOperation::readJson(QString fileurl,bool &success)
     return rootObj;
 }
 
+bool JsonOperation::writeJsonFromWidget(const QString &fileurl,QTableWidget *widget)
+{
+
+
+}
 
 bool JsonOperation::writeJsonFromWidget(const QString &filepath,const QString &filename,QTableWidget *widget)
 {

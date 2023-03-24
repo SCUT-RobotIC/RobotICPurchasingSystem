@@ -12,6 +12,7 @@
 #include<QMessageBox>
 #include<QMainWindow>
 #include<QTimer>
+#include<QFileDialog>
 
 
 CurrentMonthPage::CurrentMonthPage(QWidget *parent) :
@@ -57,13 +58,13 @@ void CurrentMonthPage::updateTable()
                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 0, item); //添加到界面
                item = new QTableWidgetItem(jsonItem.value("type").toString());
                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 1, item); //添加到界面
-               item = new QTableWidgetItem(QString::number(jsonItem.value("number").toInt()));
+               item = new QTableWidgetItem(jsonItem.value("number").toString());
                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 2, item); //添加到界面
                item = new QTableWidgetItem(jsonItem.value("link").toString());
                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 3, item); //添加到界面
                item = new QTableWidgetItem(jsonItem.value("purchaser").toString());
                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 4, item); //添加到界面
-               item = new QTableWidgetItem(QString::number(jsonItem.value("state").toInt()));
+               item = new QTableWidgetItem(jsonItem.value("state").toString());
                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 5, item); //添加到界面
                item = new QTableWidgetItem(jsonItem.value("invoice").toString());
                ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 6, item); //添加到界面
@@ -76,6 +77,64 @@ void CurrentMonthPage::updateTable()
    haveChanged=false;
 }
 
+void CurrentMonthPage::addListToTable(const QString &fileurl)
+{
+   bool success=false;
+   settings::getSettingsFromFile();
+   //qDebug()<<settings::SETTINGS_STRUCT::dataPath;
+   QJsonObject rootObj = JsonOperation::readJson(fileurl,success);
+   if (success==false)
+   {
+       JsonOperation::createJsonFile(fileurl.left(fileurl.lastIndexOf("/")),
+                                     fileurl.right(fileurl.length()-fileurl.lastIndexOf("/")-1));
+   }
+
+   QJsonArray JsonArray;
+   if(rootObj.contains("list"))
+   {
+       JsonArray =  rootObj.value("list").toArray();
+       if(!JsonArray.isEmpty())
+       {
+           int n=JsonArray.size();
+           for(int i = 0; i<n;i++)
+           {
+               QJsonObject jsonItem=JsonArray[i].toObject();
+               ui->tableWidget->setRowCount(ui->tableWidget->rowCount()+1);
+               QTableWidgetItem *item = new QTableWidgetItem(jsonItem.value("name").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 0, item); //添加到界面
+               item = new QTableWidgetItem(jsonItem.value("type").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 1, item); //添加到界面
+               item = new QTableWidgetItem(jsonItem.value("number").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 2, item); //添加到界面
+               item = new QTableWidgetItem(jsonItem.value("link").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 3, item); //添加到界面
+               item = new QTableWidgetItem(jsonItem.value("purchaser").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 4, item); //添加到界面
+               item = new QTableWidgetItem(jsonItem.value("state").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 5, item); //添加到界面
+               item = new QTableWidgetItem(jsonItem.value("invoice").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 6, item); //添加到界面
+               item = new QTableWidgetItem(jsonItem.value("notes").toString());
+               ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 7, item); //添加到界面
+
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,0)->setBackground(Qt::lightGray);
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,1)->setBackground(Qt::lightGray);
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,2)->setBackground(Qt::lightGray);
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,3)->setBackground(Qt::lightGray);
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,4)->setBackground(Qt::lightGray);
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,5)->setBackground(Qt::lightGray);
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,6)->setBackground(Qt::lightGray);
+               ui->tableWidget->item(ui->tableWidget->rowCount()-1,7)->setBackground(Qt::lightGray);
+           }
+       }
+   }
+   ui->pushButton_2->setEnabled(true);
+   haveChanged=true;
+
+
+}
+
+
 void CurrentMonthPage::getTableContent()
 {
     QJsonObject rootObj;
@@ -86,7 +145,7 @@ void CurrentMonthPage::getTableContent()
         QJsonObject item;
         item.insert("name",ui->tableWidget->item(i,0)->text());
         item.insert("type",ui->tableWidget->item(i,1)->text());
-        item.insert("number",ui->tableWidget->item(i,2)->text().toInt());
+        item.insert("number",ui->tableWidget->item(i,2)->text());
         item.insert("link",ui->tableWidget->item(i,3)->text());
         item.insert("purchaser",ui->tableWidget->item(i,4)->text());
         item.insert("state",ui->tableWidget->item(i,5)->text());
@@ -149,13 +208,19 @@ void CurrentMonthPage::on_pushButton_clicked()
 
 }
 
-
 void CurrentMonthPage::on_tableWidget_cellChanged(int row, int column)
 {
     ui->pushButton_2->setEnabled(true);
     haveChanged=true;
 }
 
-
-
+void CurrentMonthPage::on_pushButton_3_clicked()
+{
+    QString fileurl = QFileDialog::getOpenFileName(
+        this,
+        tr("选择要导入的文件"),
+        QDir::homePath()+"/documents/",
+        "Json(*.json)");
+    addListToTable(fileurl);
+}
 

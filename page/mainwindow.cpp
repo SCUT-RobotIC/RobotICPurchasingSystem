@@ -20,12 +20,16 @@ MainWindow::MainWindow(QWidget *parent)
     mCurrentMonthPage=new CurrentMonthPage(ui->tab);
     mSettingsPage=new SettingsPage(ui->tab_5);
     mHistoryPage=new HistoryPage(ui->tab_4);
+    mCreateListPage=new CreateListPage(ui->tab_6);
+    mExcelPage=new ExcelPage(ui->tab_3);
 
     QTimer::singleShot(100,this, [=]() {
         int width=ui->tabWidget->width(),height=ui->tabWidget->height()-22;
         mCurrentMonthPage->resize(width,height);
         mSettingsPage->resize(width,height);
         mHistoryPage->resize(width,height);
+        mCreateListPage->resize(width,height);
+        mExcelPage->resize(width,height);
     });//构造函数中无法获取正确的窗口大小，所以要延时处理
 
 }
@@ -42,6 +46,8 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     mCurrentMonthPage->resize(width,height);
     mHistoryPage->resize(width,height);
     mSettingsPage->resize(width,height);
+    mCreateListPage->resize(width,height);
+    mExcelPage->resize(width,height);
 }
 
 

@@ -11,26 +11,32 @@ CONFIG += c++14
 QMAKE_CXXFLAGS_RELEASE += -O3       # Release -O3
 
 SOURCES += \
+    page/createlistpage.cpp \
     exceloperation.cpp \
     jsonoperation.cpp \
     main.cpp \
     page/currentmonthpage.cpp \
+    page/excelpage.cpp \
     page/historypage.cpp \
     page/mainwindow.cpp \
     page/settingspage.cpp \
     settings.cpp
 
 HEADERS += \
+    page/createlistpage.h \
     header/exceloperation.h \
     header/jsonoperation.h \
     header/settings.h \
     page/currentmonthpage.h \
+    page/excelpage.h \
     page/historypage.h \
     page/mainwindow.h \
     page/settingspage.h
 
 FORMS += \
+    page/createlistpage.ui \
     page/currentmonthpage.ui \
+    page/excelpage.ui \
     page/historypage.ui \
     page/mainwindow.ui \
     page/settingspage.ui

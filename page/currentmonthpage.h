@@ -25,10 +25,13 @@ private slots:
 
     void on_tableWidget_cellChanged(int row, int column);
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::CurrentMonthPage *ui;
     bool haveChanged;
     void updateTable();
+    void addListToTable(const QString &fileurl);
     void getTableContent();
 
 signals:
